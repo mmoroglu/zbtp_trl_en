@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Def. For Student Unmanaged'
+define service Zbtp_sd_student_u {
+  expose zbtp_c_student_5000 as Student;
+  expose zbtp_c_acr_5000     as AcademicResult;
+  expose zbtp_c_atth         as Atth;
+}

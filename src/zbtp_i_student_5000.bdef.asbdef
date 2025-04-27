@@ -1,0 +1,114 @@
+unmanaged implementation in class zbp_btp_i_student_5000 unique;
+strict ( 2 );
+with draft;
+
+define behavior for zbtp_i_student_5000 alias Student
+
+draft table zbtp_dr_student
+
+early numbering
+lock master
+
+//for draft enabled bo
+total etag LoclLastChangedAt
+
+authorization master ( instance )
+//etag for version control while bo working on bo object!!
+//You can check the etag value for diffrent session inside of the network tab
+etag master LoclLastChangedAt
+{
+  create;
+  update ( features : instance );
+  delete ( features : instance );
+
+  association _academicres { create; with draft; }
+  association _atth { create; with draft; }
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+
+
+  field ( mandatory ) Firstname, Lastname, Age;
+  validation validate_fields on save { create; update; }
+
+  //determina action on save methodu save butonu arkasında çalışıyor.
+  //Bunu draft determina içinde de tanımlamamaız gerekiyor.
+  //  determination updateCourseDuration on save { field Course; }
+
+  determination updateCourseDuration on modify { field Course; }
+  side effects { field Course affects field Courseduration; }
+
+  draft determine action Prepare
+  {
+    validation validate_fields;
+    //    determination updateCourseDuration;
+
+  }
+
+  field ( readonly ) Id, Genderdesc;
+
+  action updateStudentStatus parameter zbtp_abs_student_entity result [1] $self;
+
+  mapping for zbtp_db_student control zbtp_cs_student_um
+    {
+      Id                = id;
+      Firstname         = firstname;
+      Lastname          = lastname;
+      Age               = age;
+      Course            = course;
+      Courseduration    = courseduration;
+      Status            = status;
+      Gender            = gender;
+      Dob               = dob;
+      CreatedBy         = created_by;
+      Createdat         = created_at;
+      LastChangedBy     = last_changed_by;
+      LastChangedAt     = last_changed_at;
+      LoclLastChangedAt = locl_last_changed_at;
+    }
+}
+
+
+define behavior for zbtp_i_acr_5000 alias AcademicResult
+
+draft table zbtp_dr_acr_5000
+
+early numbering
+lock dependent by _student
+authorization dependent by _student
+etag dependent by _student
+{
+  update;
+  delete;
+  field ( readonly ) Id;
+  association _student { with draft; }
+
+  field ( readonly ) AcrId, Coursedesc, Semesterdesc, Semresdesc;
+
+  mapping for zbtp_db_acr_5000 control zbtp_cs_academic_res
+    {
+      Id        = id;
+      AcrId     = acrid;
+      Course    = course;
+      Semester  = semester;
+      Semresult = semresult;
+    }
+}
+
+define behavior for zbtp_i_atth alias Atth
+//late numbering
+draft table zbtp_dr_atth
+
+lock dependent by _Student
+authorization dependent by _Student
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly : update ) AttachId;
+  field ( readonly ) Id;
+
+  association _Student { with draft; }
+}

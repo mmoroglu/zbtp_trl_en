@@ -1,0 +1,37 @@
+@Metadata.layer: #CORE
+annotate entity zbtp_c_atth with
+{
+
+  @UI.facet: [{ id: 'Attachments',
+                purpose: #STANDARD,
+                type: #IDENTIFICATION_REFERENCE,
+                label: 'Attachment Details',
+                position: 10 }]
+
+  @UI: { lineItem: [{ position: 10 }],
+         identification: [{ position: 10, label: 'Student ID' }],
+         hidden: true }
+  Id;
+
+  @UI: { lineItem: [{ position: 10 }],
+         identification: [{ position: 10, label: 'Attachment ID' }] }
+  AttachId;
+
+  @UI: { lineItem: [{ position: 20 }],
+         identification: [{ position: 20, label: 'Comments' }] }
+  Comments;
+
+  @UI: { lineItem: [{ position: 30 }],
+         identification: [{ position: 30, label: 'Attachment' }] }
+  Attachment;
+
+  @UI: { lineItem: [{ position: 40 }],
+         identification: [{ position: 40, label: 'Mimetype' }] }
+  Mimetype;
+
+  @UI: { lineItem: [{ position: 50 }],
+         identification: [{ position: 50, label: 'Filename' }] }
+  Filename;
+  /* Associations */
+  //  _Student;
+}

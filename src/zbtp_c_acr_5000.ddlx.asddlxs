@@ -1,0 +1,67 @@
+@Metadata.layer: #CORE
+@UI: {
+headerInfo: { typeName: 'Academic Result Detail',
+              typeNamePlural: 'Academic Result Details',
+              title: { type: #STANDARD, label: 'Academic Result Details', value: 'Id' },
+              description: { type: #STANDARD, label: 'Academic Result Details' }},
+              presentationVariant: [{ sortOrder: [{ by: 'Semester', direction: #ASC }] }]
+             }
+@Search.searchable: true
+annotate entity zbtp_c_acr_5000 with
+{
+  @UI.facet: [{ id: 'AcademicResult',
+                purpose: #STANDARD,
+                type: #IDENTIFICATION_REFERENCE,
+                label: 'Academic Result Details',
+                position: 10 }]
+
+  @UI.identification: [{ position: 10, label: 'Student ID' }]
+  @UI.hidden: true
+  Id;
+
+  @UI.identification: [{ position: 15, label: 'Academic ID' }]
+  AcrId;
+
+  @UI: { lineItem: [{ position: 20, importance: #HIGH, label: 'Course' }] }
+  @UI.identification: [{ position: 20, label: 'Course' }]
+  @Search.defaultSearchElement: true
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zbtp_i_course_5000', element: 'Value' },
+    distinctValues: true,
+    additionalBinding: [{ localElement: 'Coursedesc', element: 'Description', usage: #RESULT }] }]
+  @Consumption.filter : { selectionType: #SINGLE }
+  @UI.textArrangement: #TEXT_SEPARATE
+  Course;
+
+  @UI.identification: [{ position: 30, label: '' }]
+  @UI.lineItem: [{ position: 30, importance: #HIGH, label: '' }]
+  @Search.defaultSearchElement: true
+  Coursedesc;
+
+  @UI.identification: [{ position: 40, label: 'Semester' }]
+  @UI.lineItem: [{ position: 40, importance: #HIGH, label: 'Semester' }]
+  @Search.defaultSearchElement: true
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zbtp_i_sem_5000', element: 'Value' },
+    distinctValues: true,
+    additionalBinding: [{ localElement: 'Semesterdesc', element: 'Description', usage: #RESULT }] }]
+  Semester;
+
+  @UI.identification: [{ position: 50, label: '' }]
+  @UI.lineItem: [{ position: 50, importance: #HIGH, label: '' }]
+  @Search.defaultSearchElement: true
+  Semesterdesc;
+
+  @UI.identification: [{ position: 60, label: 'Semester Result' }]
+  @UI.lineItem: [{ position: 60, importance: #HIGH, label: 'Semester Result' }]
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zbtp_i_semres_5000', element: 'Value' },
+    distinctValues: true,
+    additionalBinding: [{ localElement: 'Semresdesc', element: 'Description', usage: #RESULT }] }]
+  Semresult;
+
+  @UI.identification: [{ position: 70, label: '' }]
+  @UI.lineItem: [{ position: 70, importance: #HIGH, label: '' }]
+  Semresdesc;
+
+  /* Associations */
+  //_student;
+
+}

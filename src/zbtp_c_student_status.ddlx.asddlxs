@@ -1,0 +1,12 @@
+@Metadata.layer: #CORE
+annotate entity zbtp_abs_student_entity with
+{
+  @EndUserText.label: 'Set Student Status'
+  status;
+
+  @EndUserText.label: 'Set Student Course'
+  course;
+
+  @EndUserText.label: 'Set Student Course Duration'
+  courseduration;
+}

@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Def. For Student'
+define service Zbtp_sd_u_5000 {
+  expose zbtp_i_student_5000 as Student;
+  expose zbtp_i_acr_5000     as AcademicResult;
+  expose zbtp_i_atth         as Attachments;
+}
